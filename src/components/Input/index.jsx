@@ -1,4 +1,5 @@
 import React from "react";
+import { StyledInput, StyledLabel } from "./style";
 
 const Input = ({
   name,
@@ -12,8 +13,8 @@ const Input = ({
 }) => {
   return (
     <>
-      <label htmlFor={id}>{labelName}</label>
-      <input
+      <StyledLabel htmlFor={id}>{labelName}</StyledLabel>
+      <StyledInput
         name={name}
         id={id}
         type={type}

@@ -16,7 +16,7 @@ export default createGlobalStyle`
     --color-negative: #E83F5B;
     
     --weight1: 700;
-    --weight2: 700;
+    --weight2: 600;
     --weight3: 500;
     --weight4: 400;
 
@@ -27,6 +27,8 @@ export default createGlobalStyle`
     --font-size5: 16px;
     --font-size6: 14px;
     --font-size7: 12px;
+    --font-size8: 10px;
+    --font-size9: 9px;
 
     --radius1: 16px;
     --radius2: 8px;
@@ -42,9 +44,14 @@ export default createGlobalStyle`
 
   body,html{
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+  }
+  a{
+    color: unset;
+    text-decoration: none;
   }
   body {
+    background-color: var(--color-gray400);
   }
   button {
     cursor: pointer;

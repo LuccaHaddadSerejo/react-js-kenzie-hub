@@ -1,9 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/imgs/Logo.svg";
-
+import { StyledHeader, StyledMain, StyledNav } from "./style";
+import Button from "../../components/Button";
 const Dashboard = ({ user, setUserState }) => {
   const navigate = useNavigate();
+
   const logout = () => {
     window.localStorage.clear();
     setUserState({});
@@ -12,20 +14,24 @@ const Dashboard = ({ user, setUserState }) => {
 
   return (
     <>
-      <header>
-        <nav>
+      <StyledHeader>
+        <StyledNav>
           <img src={Logo} alt="Logo KenzieHub" />
-          <button type={"button"} onClick={() => logout()}>
+          <Button
+            buttonType={"logout"}
+            type={"button"}
+            onClick={() => logout()}
+          >
             Sair
-          </button>
-        </nav>
-      </header>
-      <main>
+          </Button>
+        </StyledNav>
+      </StyledHeader>
+      <StyledMain>
         <section>
           <h2>Olá, {user.name}</h2>
           <p>{user.course_module}</p>
         </section>
-      </main>
+      </StyledMain>
     </>
   );
 };

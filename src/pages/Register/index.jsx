@@ -5,11 +5,12 @@ import Form from "../../components/Form";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 import { registerSchema } from "./formSchema";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { api } from "../../services/api.js";
 import { toast } from "react-toastify";
+import { StyledLink, StyledRegisterMain } from "./style";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -30,9 +31,7 @@ const Register = () => {
       const response = await api.post("/users", formData);
       toast.success(response.data.message);
       reset();
-      setTimeout(() => {
-        navigate("/");
-      }, 4000);
+      navigate("/");
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
@@ -54,21 +53,15 @@ const Register = () => {
   };
 
   return (
-    <main>
+    <StyledRegisterMain>
       <div>
         <img src={Logo} alt="Logo KenzieHub" />
-        <Link to={"/"}>
-          <Button type={"button"}>Voltar</Button>
-        </Link>
+        <StyledLink to={"/"}>Voltar</StyledLink>
       </div>
-
       <div>
-        <div>
+        <Form onSubmit={handleSubmit(submit)} noValidate={"noValidate"}>
           <h2>Crie sua conta</h2>
           <p>Rápido e grátis, vamos nessa!</p>
-        </div>
-
-        <Form onSubmit={handleSubmit(submit)}>
           <Input
             id={"userName"}
             type={"text"}
@@ -154,12 +147,16 @@ const Register = () => {
             <p>{errors.course_module.message}</p>
           )}
 
-          <Button type={"submit"} disabled={loading}>
+          <Button
+            buttonType={"login/register"}
+            type={"submit"}
+            disabled={loading}
+          >
             {loading ? "Cadastrando..." : "Cadastrar"}
           </Button>
         </Form>
       </div>
-    </main>
+    </StyledRegisterMain>
   );
 };
 

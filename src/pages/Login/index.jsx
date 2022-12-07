@@ -4,19 +4,21 @@ import Button from "../../components/Button";
 import Form from "../../components/Form";
 import Input from "../../components/Input";
 import { registerSchema } from "./formSchema.js";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { api } from "../../services/api.js";
 import { toast } from "react-toastify";
-const Login = ({ user, setUserState }) => {
+import { StyledLoginMain } from "./style";
+import { StyledLink } from "../../components/Form/style";
+
+const Login = ({ setUserState }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: yupResolver(registerSchema),
   });
@@ -26,7 +28,6 @@ const Login = ({ user, setUserState }) => {
       setLoading(true);
       const response = await api.post("/sessions", formData);
       setUserState({ ...response.data.user });
-      console.log(user);
       window.localStorage.setItem(
         "@TOKEN",
         JSON.stringify(response.data.token)
@@ -36,10 +37,7 @@ const Login = ({ user, setUserState }) => {
         JSON.stringify(response.data.user.id)
       );
       toast.success(response.data.message);
-      setTimeout(() => {
-        navigate(`/Dashboard/${response.data.user.name}`);
-        reset();
-      }, 4000);
+      navigate(`/Dashboard/${response.data.user.name}`);
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
@@ -52,13 +50,11 @@ const Login = ({ user, setUserState }) => {
   };
 
   return (
-    <main>
+    <StyledLoginMain>
       <img src={Logo} alt="Logo KenzieHub" />
       <div>
-        <div>
-          <h2>Login</h2>
-        </div>
         <Form onSubmit={handleSubmit(submit)} noValidate={"noValidate"}>
+          <h2>Login</h2>
           <Input
             id={"userEmail"}
             type={"email"}
@@ -77,18 +73,20 @@ const Login = ({ user, setUserState }) => {
           />
           {errors.password?.message && <p>{errors.password.message}</p>}
 
-          <Button type={"submit"} disabled={loading}>
+          <Button
+            buttonType={"login/register"}
+            type={"submit"}
+            disabled={loading}
+          >
             {loading ? "Entrando..." : "Entrar"}
           </Button>
+          <div>
+            <p>Ainda não possui uma conta?</p>
+            <StyledLink to={"/register"}>Cadastre-se</StyledLink>
+          </div>
         </Form>
-        <div>
-          <p>Ainda não possui uma conta?</p>
-          <Link to={"/register"}>
-            <Button type={"button"}>Cadastre-se</Button>
-          </Link>
-        </div>
       </div>
-    </main>
+    </StyledLoginMain>
   );
 };
 

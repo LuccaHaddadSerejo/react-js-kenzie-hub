@@ -1,12 +1,14 @@
 import React from "react";
+import { StyledLabel } from "../Input/style";
+import { StyledSelect } from "./style";
 
 const Select = ({ id, labelName, register, children }) => {
   return (
     <>
-      <label htmlFor={id}>{labelName}</label>
-      <select id={id} {...register}>
+      <StyledLabel htmlFor={id}>{labelName}</StyledLabel>
+      <StyledSelect id={id} {...register}>
         {children}
-      </select>
+      </StyledSelect>
     </>
   );
 };

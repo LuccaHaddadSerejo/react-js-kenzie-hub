@@ -1,9 +1,11 @@
 import React from "react";
+import { StyledForm } from "./style";
+
 const Form = ({ noValidate, onSubmit, children }) => {
   return (
-    <form onSubmit={onSubmit} noValidate={noValidate}>
-      <fieldset>{children}</fieldset>
-    </form>
+    <StyledForm onSubmit={onSubmit} noValidate={noValidate}>
+      {children}
+    </StyledForm>
   );
 };
 
