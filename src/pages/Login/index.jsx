@@ -11,6 +11,7 @@ import { api } from "../../services/api.js";
 import { toast } from "react-toastify";
 import { StyledLoginMain } from "./style";
 import { StyledLink } from "../../components/Form/style";
+import { StyledError } from "../Register/style";
 
 const Login = ({ setUserState }) => {
   const [loading, setLoading] = useState(false);
@@ -62,7 +63,11 @@ const Login = ({ setUserState }) => {
             labelName={"Email"}
             register={register("email")}
           />
-          {errors.email?.message && <p>{errors.email.message}</p>}
+          {errors.email?.message && (
+            <StyledError>
+              <p>{errors.email.message}</p>
+            </StyledError>
+          )}
 
           <Input
             id={"userPassword"}
@@ -71,7 +76,11 @@ const Login = ({ setUserState }) => {
             labelName={"Senha"}
             register={register("password")}
           />
-          {errors.password?.message && <p>{errors.password.message}</p>}
+          {errors.password?.message && (
+            <StyledError>
+              <p>{errors.password.message}</p>
+            </StyledError>
+          )}
 
           <Button
             buttonType={"login/register"}

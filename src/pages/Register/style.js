@@ -47,3 +47,13 @@ export const StyledLink = styled(Link)`
     border-color: var(--color-gray200);
   }
 `;
+
+export const StyledError = styled.div`
+  display: flex;
+  p {
+    color: var(--color-negative);
+    font-size: var(--font-size5);
+    margin-bottom: -5px;
+    margin-top: -5px;
+  }
+`;

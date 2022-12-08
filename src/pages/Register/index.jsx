@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { api } from "../../services/api.js";
 import { toast } from "react-toastify";
-import { StyledLink, StyledRegisterMain } from "./style";
+import { StyledError, StyledLink, StyledRegisterMain } from "./style";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -70,7 +70,11 @@ const Register = () => {
             register={register("name")}
             disabled={loading}
           />
-          {errors.name?.message && <p>{errors.name.message}</p>}
+          {errors.name?.message && (
+            <StyledError>
+              <p>{errors.name.message}</p>
+            </StyledError>
+          )}
 
           <Input
             id={"userEmail"}
@@ -80,7 +84,11 @@ const Register = () => {
             register={register("email")}
             disabled={loading}
           />
-          {errors.email?.message && <p>{errors.email.message}</p>}
+          {errors.email?.message && (
+            <StyledError>
+              <p>{errors.email.message}</p>
+            </StyledError>
+          )}
 
           <Input
             id={"userPassword"}
@@ -90,7 +98,11 @@ const Register = () => {
             register={register("password")}
             disabled={loading}
           />
-          {errors.password?.message && <p>{errors.password.message}</p>}
+          {errors.password?.message && (
+            <StyledError>
+              <p>{errors.password.message}</p>
+            </StyledError>
+          )}
 
           <Input
             id={"userPassConfirmation"}
@@ -101,7 +113,9 @@ const Register = () => {
             disabled={loading}
           />
           {errors.confirm_password?.message && (
-            <p>{errors.confirm_password.message}</p>
+            <StyledError>
+              <p>{errors.confirm_password.message}</p>
+            </StyledError>
           )}
 
           <Input
@@ -112,7 +126,11 @@ const Register = () => {
             register={register("bio")}
             disabled={loading}
           />
-          {errors.bio?.message && <p>{errors.bio.message}</p>}
+          {errors.bio?.message && (
+            <StyledError>
+              <p>{errors.bio.message}</p>
+            </StyledError>
+          )}
 
           <Input
             id={"userContact"}
@@ -122,7 +140,11 @@ const Register = () => {
             register={register("contact")}
             disabled={loading}
           />
-          {errors.contact?.message && <p>{errors.contact.message}</p>}
+          {errors.contact?.message && (
+            <StyledError>
+              <p>{errors.contact.message}</p>
+            </StyledError>
+          )}
 
           <Select
             id={"userModule"}
@@ -144,7 +166,9 @@ const Register = () => {
             </option>
           </Select>
           {errors.course_module?.message && (
-            <p>{errors.course_module.message}</p>
+            <StyledError>
+              <p>{errors.course_module.message}</p>
+            </StyledError>
           )}
 
           <Button
