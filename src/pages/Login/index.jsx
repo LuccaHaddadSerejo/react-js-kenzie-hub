@@ -1,21 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../providers/UserContext.jsx";
+import { registerSchema } from "./formSchema.js";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { StyledLoginMain } from "./style";
+import { StyledLink } from "../../components/Form/style";
+import { StyledError } from "../Register/style";
 import Logo from "../../assets/imgs/Logo.svg";
 import Button from "../../components/Button";
 import Form from "../../components/Form";
 import Input from "../../components/Input";
-import { registerSchema } from "./formSchema.js";
-import { useNavigate } from "react-router-dom";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import { api } from "../../services/api.js";
-import { toast } from "react-toastify";
-import { StyledLoginMain } from "./style";
-import { StyledLink } from "../../components/Form/style";
-import { StyledError } from "../Register/style";
 
-const Login = ({ setUserState }) => {
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+const Login = () => {
+  const { loading, submitLogin } = useContext(UserContext);
+
   const {
     register,
     handleSubmit,
@@ -24,37 +22,11 @@ const Login = ({ setUserState }) => {
     resolver: yupResolver(registerSchema),
   });
 
-  const userRegister = async (formData) => {
-    try {
-      setLoading(true);
-      const response = await api.post("/sessions", formData);
-      setUserState({ ...response.data.user });
-      window.localStorage.setItem(
-        "@TOKEN",
-        JSON.stringify(response.data.token)
-      );
-      window.localStorage.setItem(
-        "@USERID",
-        JSON.stringify(response.data.user.id)
-      );
-      toast.success(response.data.message);
-      navigate(`/Dashboard/${response.data.user.name}`);
-    } catch (error) {
-      toast.error(error.response.data.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const submit = (data) => {
-    userRegister(data);
-  };
-
   return (
     <StyledLoginMain>
       <img src={Logo} alt="Logo KenzieHub" />
       <div>
-        <Form onSubmit={handleSubmit(submit)} noValidate={"noValidate"}>
+        <Form onSubmit={handleSubmit(submitLogin)} noValidate={"noValidate"}>
           <h2>Login</h2>
           <Input
             id={"userEmail"}

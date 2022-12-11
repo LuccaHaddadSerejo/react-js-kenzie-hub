@@ -43,7 +43,7 @@ export default createGlobalStyle`
   }
 
   body,html{
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
   }
   a{

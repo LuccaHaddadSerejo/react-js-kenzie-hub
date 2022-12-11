@@ -1,16 +1,11 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { UserContext } from "../../providers/UserContext";
 import Logo from "../../assets/imgs/Logo.svg";
-import { StyledHeader, StyledMain, StyledNav } from "./style";
 import Button from "../../components/Button";
-const Dashboard = ({ user, setUserState }) => {
-  const navigate = useNavigate();
+import { StyledHeader, StyledMain, StyledNav } from "./style";
 
-  const logout = () => {
-    window.localStorage.clear();
-    setUserState({});
-    navigate("/");
-  };
+const Dashboard = () => {
+  const { user, logout } = useContext(UserContext);
 
   return (
     <>
@@ -28,8 +23,10 @@ const Dashboard = ({ user, setUserState }) => {
       </StyledHeader>
       <StyledMain>
         <section>
-          <h2>Olá, {user.name}</h2>
-          <p>{user.course_module}</p>
+          <>
+            <h2>Olá, {user.name}</h2>
+            <p>{user.course_module}</p>
+          </>
         </section>
       </StyledMain>
     </>

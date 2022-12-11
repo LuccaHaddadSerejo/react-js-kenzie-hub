@@ -10,6 +10,7 @@ const Input = ({
   labelName,
   register,
   disabled,
+  error,
 }) => {
   return (
     <>
@@ -22,6 +23,7 @@ const Input = ({
         required={required}
         {...register}
         disabled={disabled}
+        error={error}
       />
     </>
   );

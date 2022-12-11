@@ -1,56 +1,26 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../providers/UserContext";
+import { registerSchema } from "./formSchema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { StyledError, StyledLink, StyledRegisterMain } from "./style";
 import Logo from "../../assets/imgs/Logo.svg";
 import Button from "../../components/Button";
 import Form from "../../components/Form";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
-import { registerSchema } from "./formSchema";
-import { useNavigate } from "react-router-dom";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import { api } from "../../services/api.js";
-import { toast } from "react-toastify";
-import { StyledError, StyledLink, StyledRegisterMain } from "./style";
 
 const Register = () => {
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const { loading, submitRegister } = useContext(UserContext);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
-    mode: "onBlur",
+    mode: "onSubmit",
     resolver: yupResolver(registerSchema),
   });
-
-  const userRegister = async (formData) => {
-    try {
-      setLoading(true);
-      const response = await api.post("/users", formData);
-      toast.success(response.data.message);
-      reset();
-      navigate("/");
-    } catch (error) {
-      toast.error(error.response.data.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const submit = (data) => {
-    const { name, contact, course_module, email, bio, password } = data;
-    const newData = {
-      name: name,
-      contact: contact,
-      course_module: course_module,
-      email: email,
-      bio: bio,
-      password: password,
-    };
-    userRegister(newData);
-  };
 
   return (
     <StyledRegisterMain>
@@ -59,7 +29,7 @@ const Register = () => {
         <StyledLink to={"/"}>Voltar</StyledLink>
       </div>
       <div>
-        <Form onSubmit={handleSubmit(submit)} noValidate={"noValidate"}>
+        <Form onSubmit={handleSubmit(submitRegister)} noValidate={"noValidate"}>
           <h2>Crie sua conta</h2>
           <p>Rápido e grátis, vamos nessa!</p>
           <Input
@@ -75,7 +45,6 @@ const Register = () => {
               <p>{errors.name.message}</p>
             </StyledError>
           )}
-
           <Input
             id={"userEmail"}
             type={"email"}
@@ -89,7 +58,6 @@ const Register = () => {
               <p>{errors.email.message}</p>
             </StyledError>
           )}
-
           <Input
             id={"userPassword"}
             type={"password"}
@@ -103,7 +71,6 @@ const Register = () => {
               <p>{errors.password.message}</p>
             </StyledError>
           )}
-
           <Input
             id={"userPassConfirmation"}
             type={"password"}
@@ -117,7 +84,6 @@ const Register = () => {
               <p>{errors.confirm_password.message}</p>
             </StyledError>
           )}
-
           <Input
             id={"userBio"}
             type={"text"}
@@ -131,7 +97,6 @@ const Register = () => {
               <p>{errors.bio.message}</p>
             </StyledError>
           )}
-
           <Input
             id={"userContact"}
             type={"text"}
@@ -145,7 +110,6 @@ const Register = () => {
               <p>{errors.contact.message}</p>
             </StyledError>
           )}
-
           <Select
             id={"userModule"}
             labelName={"Selecionar módulo"}
@@ -170,7 +134,6 @@ const Register = () => {
               <p>{errors.course_module.message}</p>
             </StyledError>
           )}
-
           <Button
             buttonType={"login/register"}
             type={"submit"}
