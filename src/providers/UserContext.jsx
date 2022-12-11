@@ -6,15 +6,17 @@ import { useNavigate } from "react-router-dom";
 export const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [techList, setTechList] = useState([]);
   const navigate = useNavigate();
 
   const userLogin = async (formData) => {
     try {
       setLoading(true);
       const response = await api.post("/sessions", formData);
-      setUser(response.data.user);
+      setUserData(response.data.user);
+      setTechList(response.data.user.techs);
       localStorage.setItem("@TOKEN", JSON.stringify(response.data.token));
       localStorage.setItem("@USERID", JSON.stringify(response.data.user.id));
       toast.success(response.data.message);
@@ -59,13 +61,21 @@ export const UserProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("@TOKEN");
     localStorage.removeItem("@USERID");
-    setUser(null);
+    setUserData(null);
     navigate("/");
   };
 
   return (
     <UserContext.Provider
-      value={{ user, loading, submitLogin, submitRegister, logout }}
+      value={{
+        userData,
+        techList,
+        setTechList,
+        loading,
+        submitLogin,
+        submitRegister,
+        logout,
+      }}
     >
       {children}
     </UserContext.Provider>

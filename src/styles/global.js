@@ -51,7 +51,7 @@ export default createGlobalStyle`
     text-decoration: none;
   }
   body {
-    background-color: var(--color-gray400);
+    background-color: var(--color-white);
   }
   button {
     cursor: pointer;
