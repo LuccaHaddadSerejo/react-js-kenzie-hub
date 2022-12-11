@@ -35,7 +35,7 @@ export const TechProvider = ({ children }) => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      toast.success("Tecnologia deleted successfully");
+      toast.success("Tecnology deleted successfully");
       const filterList = techList.filter((elt) => elt.id !== id);
       setTechList(() => [...filterList]);
     } catch (error) {
@@ -43,8 +43,35 @@ export const TechProvider = ({ children }) => {
     }
   }
 
+  async function updateTech(formData, id) {
+    const token = JSON.parse(localStorage.getItem("@TOKEN"));
+    try {
+      const response = await api.put(`/users/techs/${id}`, formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const updatedList = techList.map((elt) => {
+        if (elt.id === id) {
+          elt.status = response.data.status;
+          return elt;
+        } else {
+          return elt;
+        }
+      });
+
+      setTechList(() => [...updatedList]);
+      toast.success("Tecnology updated successfully");
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  }
+
+  function submitUpdateTech(data, id) {
+    updateTech(data, id);
+  }
+
   return (
-    <TechContext.Provider value={{ submitTech, deleteTech }}>
+    <TechContext.Provider value={{ submitTech, deleteTech, submitUpdateTech }}>
       {children}
     </TechContext.Provider>
   );
