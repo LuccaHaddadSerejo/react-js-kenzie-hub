@@ -12,7 +12,7 @@ import Form from "../../components/Form";
 import Input from "../../components/Input";
 
 const Login = () => {
-  const { loading, submitLogin } = useContext(UserContext);
+  const { globalLoading, submitLogin } = useContext(UserContext);
 
   const {
     register,
@@ -57,9 +57,9 @@ const Login = () => {
           <Button
             buttonType={"login/register"}
             type={"submit"}
-            disabled={loading}
+            disabled={globalLoading}
           >
-            {loading ? "Entrando..." : "Entrar"}
+            {globalLoading ? "Entrando..." : "Entrar"}
           </Button>
           <div>
             <p>Ainda não possui uma conta?</p>

@@ -13,8 +13,6 @@ const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [techInfo, setTechInfo] = useState([]);
 
-  console.log(techInfo);
-
   return (
     <>
       <StyledHeader>

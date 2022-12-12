@@ -1,30 +1,59 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { api } from "../services/api.js";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [GlobalLoading, setGlobalLoading] = useState(false);
+  const [dashBoardLoading, setdashBoardLoading] = useState(true);
   const [techList, setTechList] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    (async () => {
+      const token = JSON.parse(localStorage.getItem("@TOKEN"));
+      if (!token) {
+        setdashBoardLoading(false);
+        return;
+      }
+      try {
+        setdashBoardLoading(true);
+        const response = await api.get(`/profile`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUserData(response.data);
+        navigate(`/Dashboard/${response.data.name}`);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setdashBoardLoading(false);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const userLogin = async (formData) => {
     try {
-      setLoading(true);
+      setGlobalLoading(true);
       const response = await api.post("/sessions", formData);
-      setUserData(response.data.user);
-      setTechList(response.data.user.techs);
       localStorage.setItem("@TOKEN", JSON.stringify(response.data.token));
       localStorage.setItem("@USERID", JSON.stringify(response.data.user.id));
+      setUserData(response.data.user);
+      setTechList(response.data.user.techs);
       toast.success(response.data.message);
-      navigate(`/Dashboard/${response.data.user.name}`);
+      const toNavigate =
+        location.state?.from?.pathname ||
+        `/Dashboard/${response.data.user.name}`;
+
+      navigate(toNavigate, { replace: true });
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
-      setLoading(false);
+      setGlobalLoading(false);
     }
   };
 
@@ -34,14 +63,14 @@ export const UserProvider = ({ children }) => {
 
   const userRegister = async (formData) => {
     try {
-      setLoading(true);
+      setGlobalLoading(true);
       const response = await api.post("/users", formData);
       toast.success(response.data.message);
       navigate("/");
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
-      setLoading(false);
+      setGlobalLoading(false);
     }
   };
 
@@ -68,10 +97,11 @@ export const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
+        dashBoardLoading,
         userData,
         techList,
         setTechList,
-        loading,
+        GlobalLoading,
         submitLogin,
         submitRegister,
         logout,

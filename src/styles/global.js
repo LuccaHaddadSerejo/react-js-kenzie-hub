@@ -46,13 +46,16 @@ export default createGlobalStyle`
     width: 100%;
     min-height: 100vh;
   }
+  
   a{
     color: unset;
     text-decoration: none;
   }
+
   body {
     background-color: var(--color-white);
   }
+
   button {
     cursor: pointer;
   }

@@ -11,7 +11,7 @@ import Input from "../../components/Input";
 import Select from "../../components/Select";
 
 const Register = () => {
-  const { loading, submitRegister } = useContext(UserContext);
+  const { globalLoading, submitRegister } = useContext(UserContext);
 
   const {
     register,
@@ -38,7 +38,7 @@ const Register = () => {
             placeholder={"Digite seu nome"}
             labelName={"Nome"}
             register={register("name")}
-            disabled={loading}
+            disabled={globalLoading}
           />
           {errors.name?.message && (
             <StyledError>
@@ -51,7 +51,7 @@ const Register = () => {
             placeholder={"Digite seu email"}
             labelName={"Email"}
             register={register("email")}
-            disabled={loading}
+            disabled={globalLoading}
           />
           {errors.email?.message && (
             <StyledError>
@@ -64,7 +64,7 @@ const Register = () => {
             placeholder={"Digite sua senha"}
             labelName={"Senha"}
             register={register("password")}
-            disabled={loading}
+            disabled={globalLoading}
           />
           {errors.password?.message && (
             <StyledError>
@@ -77,7 +77,7 @@ const Register = () => {
             placeholder={"Digite novamente usa senha"}
             labelName={"Confirmar senha"}
             register={register("confirm_password")}
-            disabled={loading}
+            disabled={globalLoading}
           />
           {errors.confirm_password?.message && (
             <StyledError>
@@ -90,7 +90,7 @@ const Register = () => {
             placeholder={"Fale sobre você"}
             labelName={"Bio"}
             register={register("bio")}
-            disabled={loading}
+            disabled={globalLoading}
           />
           {errors.bio?.message && (
             <StyledError>
@@ -103,7 +103,7 @@ const Register = () => {
             placeholder={"Método de contato"}
             labelName={"Contato"}
             register={register("contact")}
-            disabled={loading}
+            disabled={globalLoading}
           />
           {errors.contact?.message && (
             <StyledError>
@@ -137,9 +137,9 @@ const Register = () => {
           <Button
             buttonType={"login/register"}
             type={"submit"}
-            disabled={loading}
+            disabled={globalLoading}
           >
-            {loading ? "Cadastrando..." : "Cadastrar"}
+            {globalLoading ? "Cadastrando..." : "Cadastrar"}
           </Button>
         </Form>
       </div>
