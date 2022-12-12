@@ -26,6 +26,7 @@ export const UserProvider = ({ children }) => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUserData(response.data);
+        setTechList(response.data.techs);
         navigate(`/Dashboard/${response.data.name}`);
       } catch (error) {
         console.error(error);
