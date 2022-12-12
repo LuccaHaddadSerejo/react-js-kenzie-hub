@@ -6,6 +6,7 @@ import Modal from "../../components/Modal";
 import TechCard from "../../components/CardTech";
 import Logo from "../../assets/imgs/Logo.svg";
 import Button from "../../components/Button";
+import Plus from "../../assets/imgs/+.svg";
 
 const Dashboard = () => {
   const { logout, techList, userData } = useContext(UserContext);
@@ -35,26 +36,24 @@ const Dashboard = () => {
           </>
         </section>
         <section>
-          <>
+          <div>
             <h2>Tecnologias</h2>
             <button onClick={() => setShowModal(true)}>
-              Adicionar tecnologia
+              <img src={Plus} alt="plus"></img>
             </button>
-          </>
-          <>
-            <ul>
-              {techList.map((tech) => {
-                return (
-                  <TechCard
-                    key={tech.id}
-                    tech={tech}
-                    setShowModal={setShowModal}
-                    setTechInfo={setTechInfo}
-                  />
-                );
-              })}
-            </ul>
-          </>
+          </div>
+          <ul>
+            {techList.map((tech) => {
+              return (
+                <TechCard
+                  key={tech.id}
+                  tech={tech}
+                  setShowModal={setShowModal}
+                  setTechInfo={setTechInfo}
+                />
+              );
+            })}
+          </ul>
         </section>
         {showModal ? (
           <Modal

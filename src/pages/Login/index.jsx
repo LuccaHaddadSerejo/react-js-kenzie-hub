@@ -26,7 +26,11 @@ const Login = () => {
     <StyledLoginMain>
       <img src={Logo} alt="Logo KenzieHub" />
       <div>
-        <Form onSubmit={handleSubmit(submitLogin)} noValidate={"noValidate"}>
+        <Form
+          padding={"login/register"}
+          onSubmit={handleSubmit(submitLogin)}
+          noValidate={"noValidate"}
+        >
           <h2>Login</h2>
           <Input
             id={"userEmail"}

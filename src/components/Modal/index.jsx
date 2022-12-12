@@ -3,6 +3,8 @@ import Input from "../Input";
 import Select from "../Select";
 import { useForm } from "react-hook-form";
 import Button from "../Button";
+import { StyledModalContent, StyledModalWrapper } from "./style";
+import Form from "../Form";
 
 const Modal = ({
   setShowModal,
@@ -23,17 +25,18 @@ const Modal = ({
   }
 
   return (
-    <div>
+    <StyledModalWrapper>
       <div>
         {techInfo.length === 0 ? (
-          <>
+          <StyledModalContent>
             <div>
               <h2>Cadastrar tecnologia</h2>
               <button type="button" onClick={() => setShowModal(false)}>
                 X
               </button>
             </div>
-            <form
+            <Form
+              padding={"modal"}
               onSubmit={handleSubmit((data) => {
                 submitTech(data);
                 setShowModal(false);
@@ -43,7 +46,7 @@ const Modal = ({
                 name={"techCreate"}
                 id={"CreateTech"}
                 type="text"
-                placeholder={"Escreva tecnologia que deseja cadastrar"}
+                placeholder={"Tecnologia"}
                 disabled={false}
                 labelName={"Nome"}
                 register={register("title")}
@@ -61,17 +64,18 @@ const Modal = ({
               <Button buttonType={"login/register"} type="submit">
                 Adicionar
               </Button>
-            </form>
-          </>
+            </Form>
+          </StyledModalContent>
         ) : (
-          <>
+          <StyledModalContent>
             <div>
               <h2>Detalhes da tecnologia</h2>
               <button type="button" onClick={() => closeModal()}>
                 X
               </button>
             </div>
-            <form
+            <Form
+              padding={"modal"}
               onSubmit={handleSubmit((data) => {
                 submitUpdateTech(data, tech.id);
                 closeModal();
@@ -95,13 +99,20 @@ const Modal = ({
                 <option value="Intermediário">Intermediário</option>
                 <option value="Avançado">Avançado</option>
               </Select>
-              <Button type="submit">Atualizar</Button>
-              <Button onClick={() => deleteTech(tech.id)}>Deletar</Button>
-            </form>
-          </>
+              <Button buttonType={"login/register"} type="submit">
+                Salvar alteração
+              </Button>
+              <Button
+                buttonType={"modalDelete"}
+                onClick={() => deleteTech(tech.id)}
+              >
+                Deletar
+              </Button>
+            </Form>
+          </StyledModalContent>
         )}
       </div>
-    </div>
+    </StyledModalWrapper>
   );
 };
 

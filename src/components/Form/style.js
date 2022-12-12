@@ -1,10 +1,21 @@
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const StyledForm = styled.form`
   width: 100%;
-  max-width: 450px;
-  padding: 34px 18px;
+  max-width: 500px;
+  ${({ padding }) => {
+    if (padding === "login/register") {
+      return css`
+        padding: 34px 18px;
+      `;
+    } else if (padding === "modal") {
+      return css`
+        padding: 15px 18px;
+      `;
+    }
+  }}
+
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -44,7 +55,6 @@ export const StyledLink = styled(Link)`
   cursor: pointer;
 
   &:hover {
-    background-color: var(--color-gray200);
-    border-color: var(--color-gray200);
+    filter: brightness(1.2);
   }
 `;

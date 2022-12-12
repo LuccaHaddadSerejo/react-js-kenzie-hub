@@ -43,8 +43,7 @@ export const StyledLink = styled(Link)`
   cursor: pointer;
 
   &:hover {
-    background-color: var(--color-gray200);
-    border-color: var(--color-gray200);
+    filter: brightness(1.2);
   }
 `;
 

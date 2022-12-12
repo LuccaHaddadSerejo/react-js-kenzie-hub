@@ -29,7 +29,11 @@ const Register = () => {
         <StyledLink to={"/"}>Voltar</StyledLink>
       </div>
       <div>
-        <Form onSubmit={handleSubmit(submitRegister)} noValidate={"noValidate"}>
+        <Form
+          padding={"login/register"}
+          onSubmit={handleSubmit(submitRegister)}
+          noValidate={"noValidate"}
+        >
           <h2>Crie sua conta</h2>
           <p>Rápido e grátis, vamos nessa!</p>
           <Input

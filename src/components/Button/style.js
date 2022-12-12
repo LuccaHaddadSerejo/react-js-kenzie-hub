@@ -36,7 +36,22 @@ export const StyledButton = styled.button`
           color: var(--color-gray0);
 
           &:hover {
-            background-color: var(--color-gray200);
+            filter: brightness(1.2);
+          }
+        `;
+      case "modalDelete":
+        return css`
+          width: 100%;
+          height: 38.5px;
+          color: var(--color-gray0);
+          border-radius: var(--radius3);
+          background-color: var(--color-gray200);
+          border: 1px solid var(--color-gray200);
+          font-weight: var(--weight2);
+          font-size: var(--font-size8);
+
+          &:hover {
+            filter: brightness(1.2);
           }
         `;
     }
