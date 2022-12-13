@@ -7,8 +7,8 @@ export const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
-  const [GlobalLoading, setGlobalLoading] = useState(false);
-  const [dashBoardLoading, setdashBoardLoading] = useState(true);
+  const [globalLoading, setGlobalLoading] = useState(false);
+  const [dashBoardLoading, setDashBoardLoading] = useState(true);
   const [techList, setTechList] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,12 +16,14 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     (async () => {
       const token = JSON.parse(localStorage.getItem("@TOKEN"));
+
       if (!token) {
-        setdashBoardLoading(false);
+        setDashBoardLoading(false);
         return;
       }
+
       try {
-        setdashBoardLoading(true);
+        setDashBoardLoading(true);
         const response = await api.get(`/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -31,7 +33,7 @@ export const UserProvider = ({ children }) => {
       } catch (error) {
         console.error(error);
       } finally {
-        setdashBoardLoading(false);
+        setDashBoardLoading(false);
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -102,7 +104,8 @@ export const UserProvider = ({ children }) => {
         userData,
         techList,
         setTechList,
-        GlobalLoading,
+        globalLoading,
+        setGlobalLoading,
         submitLogin,
         submitRegister,
         logout,

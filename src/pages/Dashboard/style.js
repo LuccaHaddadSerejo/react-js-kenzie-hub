@@ -103,3 +103,22 @@ export const StyledMain = styled.main`
     }
   }
 `;
+
+export const StyledEmptyList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 1400px;
+  padding: 22px 8.5px;
+  width: 100%;
+  border: transparent;
+  border-radius: var(--radius3);
+  background-color: var(--color-gray300);
+
+  p {
+    color: var(--color-gray0);
+    font-weight: var(--weigth1);
+    font-size: var(--font-size3);
+  }
+`;

@@ -93,8 +93,8 @@ const Modal = ({
                 id={"updateTechStatus"}
                 labelName={"Status"}
                 register={register("status")}
+                defaultValue={tech.status}
               >
-                <option value="">Escolha sua proficiência</option>
                 <option value="Iniciante">Iniciante</option>
                 <option value="Intermediário">Intermediário</option>
                 <option value="Avançado">Avançado</option>

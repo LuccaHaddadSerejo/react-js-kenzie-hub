@@ -1,15 +1,16 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../providers/UserContext";
-import { StyledHeader, StyledMain, StyledNav } from "./style";
+import { StyledEmptyList, StyledHeader, StyledMain, StyledNav } from "./style";
 import { TechContext } from "../../providers/TechContext";
 import Modal from "../../components/Modal";
 import TechCard from "../../components/CardTech";
 import Logo from "../../assets/imgs/Logo.svg";
 import Button from "../../components/Button";
 import Plus from "../../assets/imgs/+.svg";
+import LoadingModal from "../../components/LoadingModal";
 
 const Dashboard = () => {
-  const { logout, techList, userData } = useContext(UserContext);
+  const { logout, techList, userData, globalLoading } = useContext(UserContext);
   const { submitTech, deleteTech, submitUpdateTech } = useContext(TechContext);
   const [showModal, setShowModal] = useState(false);
   const [techInfo, setTechInfo] = useState([]);
@@ -42,18 +43,24 @@ const Dashboard = () => {
               <img src={Plus} alt="plus"></img>
             </button>
           </div>
-          <ul>
-            {techList.map((tech) => {
-              return (
-                <TechCard
-                  key={tech.id}
-                  tech={tech}
-                  setShowModal={setShowModal}
-                  setTechInfo={setTechInfo}
-                />
-              );
-            })}
-          </ul>
+          {techList.length !== 0 ? (
+            <ul>
+              {techList.map((tech) => {
+                return (
+                  <TechCard
+                    key={tech.id}
+                    tech={tech}
+                    setShowModal={setShowModal}
+                    setTechInfo={setTechInfo}
+                  />
+                );
+              })}
+            </ul>
+          ) : (
+            <StyledEmptyList>
+              <p>Você ainda não possui nenhuma tecnologia cadastrada</p>
+            </StyledEmptyList>
+          )}
         </section>
         {showModal ? (
           <Modal
@@ -67,6 +74,7 @@ const Dashboard = () => {
             setTechInfo={setTechInfo}
           />
         ) : null}
+        {globalLoading ? <LoadingModal /> : null}
       </StyledMain>
     </>
   );
